@@ -14,7 +14,7 @@ func main() {
 	pattern := "hello"
 	files := []string{}
 
-	fmt.Print("./grep ")
+	fmt.Print("grep ")
 	scanner := bufio.NewScanner(os.Stdin)
 
 	var lines []string
