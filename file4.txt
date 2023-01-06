@@ -1,0 +1,3 @@
+When you want to accept text only of a specific format and read certain items into variables, 
+the best method is to use the fmt.Scanf() function,
+ which reads the text according to a given format.
