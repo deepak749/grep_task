@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func MultipleFlagSituation(text []string, pattern string, file string, mpp map[string]int) []string {
+func MultipleFlagSituation(text []string, pattern string, file string, mpp map[string]int, n int) []string {
 	val := []string{}
 	if mpp["-n"] == 1 && mpp["-v"] == 1 && mpp["-i"] == 0 && mpp["-l"] == 0 && mpp["-x"] == 0 {
 		for i, line := range text {
@@ -16,6 +16,7 @@ func MultipleFlagSituation(text []string, pattern string, file string, mpp map[s
 				val = append(val, str+":"+line)
 			}
 		}
+
 	}
 	if mpp["-n"] == 1 && mpp["-x"] == 1 && mpp["-v"] == 1 && mpp["-i"] == 0 && mpp["-l"] == 0 {
 		for i, line := range text {
@@ -76,13 +77,21 @@ func NoFlagSingleFile(text []string, pattern string, file string) []string {
 	}
 	return val
 }
-func SingleFlag(text []string, flag, pattern string, file string) []string {
+func SingleFlag(text []string, flag, pattern string, file string, n int) []string {
 	result := []string{}
-	if flag == "-n" {
+	if flag == "-n" && n == 1 {
 		for i, line := range text {
 			if strings.Contains(line, pattern) {
 				str := strconv.Itoa(i + 1)
 				result = append(result, str+":"+line)
+			}
+		}
+	}
+	if flag == "-n" && n > 1 {
+		for i, line := range text {
+			if strings.Contains(line, pattern) {
+				str := strconv.Itoa(i + 1)
+				result = append(result, file+":"+str+":"+line)
 			}
 		}
 	}
@@ -140,7 +149,7 @@ func Search(pattern string, flags, fileName []string) []string {
 		file.Close()
 		if len(flags) <= 1 {
 			if flags[0] != "" {
-				result = append(result, SingleFlag(text, flags[0], pattern, files)...)
+				result = append(result, SingleFlag(text, flags[0], pattern, files, n)...)
 
 			} else {
 				if n == 1 {
