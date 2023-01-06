@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func MultipleFlagSituation(text []string, pattern string, file string, mpp map[string]int, n int) []string {
+func MultipleFlagSituation(text []string, pattern string, file string, mpp map[string]int) []string {
 	val := []string{}
 	if mpp["-n"] == 1 && mpp["-v"] == 1 && mpp["-i"] == 0 && mpp["-l"] == 0 && mpp["-x"] == 0 {
 		for i, line := range text {
