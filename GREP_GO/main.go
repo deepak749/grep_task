@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"module/grepImplementation/grep"
+
 	"os"
 	"strings"
 )
@@ -11,7 +12,7 @@ import (
 func main() {
 
 	flag := []string{}
-	pattern := "hello"
+	var pattern string
 	files := []string{}
 
 	fmt.Print("grep ")
@@ -21,7 +22,6 @@ func main() {
 	scanner.Scan()
 	line := scanner.Text()
 	lines = strings.Split(line, " ")
-	fmt.Println(len(lines))
 	pattern = lines[0]
 	for i := 1; i < len(lines); i++ {
 		if lines[i][0] == '-' {
