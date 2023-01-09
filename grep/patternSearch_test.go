@@ -39,7 +39,6 @@ func TestCaseHyphen_lFlag(t *testing.T) {
 //testcase 3: when flag is "-i"
 
 func TestCaseHyph_iFlag(t *testing.T) {
-	fmt.Println("Testcase 3")
 	expectedSlice3 := []string{"byye bye hellow", "gffv rree gghgv as hello"}
 	compareSlice(Search("hELLo", []string{"-i"}, []string{"test_file1.txt"}), expectedSlice3, t)
 }
