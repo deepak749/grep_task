@@ -79,54 +79,62 @@ func NoFlagSingleFile(text []string, pattern string, file string) []string {
 }
 func SingleFlag(text []string, flag, pattern string, file string, n int) []string {
 	result := []string{}
-	if flag == "-n" && n == 1 {
-		for i, line := range text {
-			if strings.Contains(line, pattern) {
-				str := strconv.Itoa(i + 1)
-				result = append(result, str+":"+line)
+	switch flag {
+	case "-n":
+		{
+			if n == 1 {
+				for i, line := range text {
+					if strings.Contains(line, pattern) {
+						str := strconv.Itoa(i + 1)
+						result = append(result, str+":"+line)
+					}
+				}
+			} else {
+				for i, line := range text {
+					if strings.Contains(line, pattern) {
+						str := strconv.Itoa(i + 1)
+						result = append(result, file+":"+str+":"+line)
+					}
+				}
 			}
 		}
-	}
-	if flag == "-n" && n > 1 {
-		for i, line := range text {
-			if strings.Contains(line, pattern) {
-				str := strconv.Itoa(i + 1)
-				result = append(result, file+":"+str+":"+line)
+	case "-l":
+		{
+			temp := false
+			for _, line := range text {
+				if strings.Contains(line, pattern) {
+					temp = true
+					break
+				}
+			}
+			if temp {
+				result = append(result, file)
 			}
 		}
-	}
-	if flag == "-l" {
-		temp := false
-		for _, line := range text {
-			if strings.Contains(line, pattern) {
-				temp = true
-				break
-			}
-		}
-		if temp {
-			result = append(result, file)
-		}
-	}
-	if flag == "-i" {
-		for _, line := range text {
-			if strings.Contains(strings.ToLower(line), strings.ToLower(pattern)) {
+	case "-i":
+		{
+			for _, line := range text {
+				if strings.Contains(strings.ToLower(line), strings.ToLower(pattern)) {
 
-				result = append(result, line)
+					result = append(result, line)
+				}
 			}
-		}
 
-	}
-	if flag == "-v" {
-		for _, line := range text {
-			if !strings.Contains(line, pattern) {
-				result = append(result, line)
+		}
+	case "-v":
+		{
+			for _, line := range text {
+				if !strings.Contains(line, pattern) {
+					result = append(result, line)
+				}
 			}
 		}
-	}
-	if flag == "-x" {
-		for _, line := range text {
-			if line == pattern {
-				result = append(result, line)
+	case "-x":
+		{
+			for _, line := range text {
+				if line == pattern {
+					result = append(result, line)
+				}
 			}
 		}
 	}
